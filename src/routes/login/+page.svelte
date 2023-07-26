@@ -1,4 +1,6 @@
 <script>
+    import { BACK_URL } from '$env/static/private';
+    
     let id, pw='';
     const fetchLogin = ()=>{
         const checkEmail = validateEmail();
@@ -10,7 +12,7 @@
                 id : id,
                 pw : pw,
             };
-        fetch("http://localhost:3000/sprint/user/login", {
+        fetch(`${BACK_URL}/sprint/user/login`, {
             method : "POST",
             body : JSON.stringify(data),
             headers:{          

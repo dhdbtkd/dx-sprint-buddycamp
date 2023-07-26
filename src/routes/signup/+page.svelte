@@ -38,7 +38,7 @@
                 id : id,
                 pw : pw,
             };
-        fetch("http://localhost:3000/sprint/user/signup",{
+        fetch(`${BACK_URL}/sprint/user/signup`,{
             method : "POST",
             body : JSON.stringify(data),
             headers:{          
