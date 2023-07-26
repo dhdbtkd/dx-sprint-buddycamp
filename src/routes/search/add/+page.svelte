@@ -110,7 +110,7 @@
 		})
 	}
 </script>
-<div class="mt-12 p-3">
+<div class="mt-12 mb-20 p-3">
 	<div class="font-bold my-3">버디 등록</div>
 	<div>
 		<form on:submit={()=>{submitForm()}}>

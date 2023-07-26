@@ -10,6 +10,16 @@ const db = {
             return json;
         })
         return result;
+    },
+    getParties : async ()=>{
+        const result = await fetch(`${PUBLIC_BACK_URL}/sprint/party`)
+        .then((response)=>{
+            return response.json()
+        })
+        .then((json)=>{
+            return json;
+        })
+        return result;
     }
 }
 export default db

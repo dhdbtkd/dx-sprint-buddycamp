@@ -1,7 +1,6 @@
 <script>
     
     export let buddy;
-    export let selectedSido;
     let style = {
         1 : {
             badge_class : "rounded-full text-xs bg-sky-700 text-white text-center py-0.5 mt-3 px-3"
