@@ -1,6 +1,7 @@
 
 <script>
 	import { onMount } from "svelte";
+	import { BACK_URL } from '$env/static/private';
 
 	let address, coord, add_1depth, add_2depth, bcode;
 	let name, position, workYear, introduce;
@@ -8,7 +9,6 @@
 	const openDaumSearch = ()=>{
 		new daum.Postcode({
 			oncomplete: function(data) {
-				console.log("🚀 ~ file: +page.svelte:10 ~ openDaumSearch ~ data:", data)
 				address = data.address;
 				bcode = data.bcode;
 				getGeocodeKakao(address);
@@ -89,7 +89,7 @@
 			avatar_path : selectedAvatar,
 			bcode : bcode
 		}
-		fetch("http://localhost:3000/sprint/buddy/add",{
+		fetch(`${BACK_URL}/sprint/buddy/add`,{
 			method : "post",
 			body : JSON.stringify(data),
 			headers : {
