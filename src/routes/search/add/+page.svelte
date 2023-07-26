@@ -1,7 +1,7 @@
 
 <script>
 	import { onMount } from "svelte";
-	import { BACK_URL } from '$env/static/private';
+	import { PUBLIC_BACK_URL } from '$env/static/public';
 
 	let address, coord, add_1depth, add_2depth, bcode;
 	let name, position, workYear, introduce;
@@ -89,7 +89,7 @@
 			avatar_path : selectedAvatar,
 			bcode : bcode
 		}
-		fetch(`${BACK_URL}/sprint/buddy/add`,{
+		fetch(`${PUBLIC_BACK_URL}/sprint/buddy/add`,{
 			method : "post",
 			body : JSON.stringify(data),
 			headers : {

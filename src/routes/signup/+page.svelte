@@ -1,4 +1,6 @@
 <script>
+    import { PUBLIC_BACK_URL } from '$env/static/public';
+    
     let id, pw='', pw2='';
     $: pwLength=pw.length;
     $: pw2Length=pw2.length;
@@ -38,7 +40,7 @@
                 id : id,
                 pw : pw,
             };
-        fetch(`${BACK_URL}/sprint/user/signup`,{
+        fetch(`${PUBLIC_BACK_URL}/sprint/user/signup`,{
             method : "POST",
             body : JSON.stringify(data),
             headers:{          
