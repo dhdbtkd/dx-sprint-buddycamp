@@ -97,11 +97,11 @@
 <div class="mt-14 mb-20">
 	<div class="mx-3 my-6 rounded-lg flex flex-col items-center border-b">
 
-		<div class="w-3/4 font-bold text-xl my-2">
+		<div class="w-4/5 font-bold text-xl my-2">
 			{party.title}
 		</div>
 		
-		<div class="w-3/4 flex justify-between text-sm text-gray-600">
+		<div class="w-4/5 flex justify-between text-sm text-gray-600">
 			<div>
 				<span class="text-md">
 					🗺️
@@ -112,14 +112,14 @@
 				{sidoName}
 			</div>
 		</div>
-		<div class="w-3/4 flex justify-between text-sm text-gray-600 my-1 pb-3">
+		<div class="w-4/5 flex justify-between text-sm text-gray-600 my-1 pb-3">
 			<div>
 				<span class="text-md">
 					👋
 				</span>
 				모집 포지션
 			</div>
-			<div class="flex font-bold text-xs">
+			<div class="flex font-bold text-[0.5rem]">
 				{#each party.positions.split(",") as position, index (index)}
 					{#if position == 1}
 						<span class="border border-gray-300 rounded-full mx-0.5 px-1.5 py-0.5">개발자</span>
@@ -131,7 +131,7 @@
 				{/each}
 			</div>
 		</div>
-		<div class="text-sm w-3/4 mt-3 mb-10">
+		<div class="text-sm w-4/5 mt-3 mb-10">
 			<div class="text-xs text-gray-600 text-center mb-2">
 				모임소개
 			</div>

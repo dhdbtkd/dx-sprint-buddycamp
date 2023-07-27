@@ -25,6 +25,7 @@
 	"dependencies": {
 		"@lottiefiles/lottie-player": "^2.0.2",
 		"@lottiefiles/svelte-lottie-player": "^0.3.0",
+		"cesium": "^1.107.2",
 		"swiper": "^10.0.4"
 	}
 }
