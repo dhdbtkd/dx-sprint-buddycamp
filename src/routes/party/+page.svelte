@@ -3,12 +3,12 @@
 	import { crossfade } from "svelte/transition";
 	import Party from './Party_card.svelte';
 	import { quintOut } from 'svelte/easing';
-	// import { buddies } from "$lib/store";
+	import { parties } from "$lib/store";
 
 	export let data;
-	console.log("🚀 ~ file: +page.svelte:9 ~ data:", data)
+	console.log("🚀 ~ file: +page.svelte:9 ~ data:", data.parties)
 	let selectedSido;
-	// $: buddies.set(data);
+	$: parties.set(data);
 	const [send, receive] = crossfade({
 		duration: (d) => Math.sqrt(d * 200),
 
@@ -17,7 +17,7 @@
 			const transform = style.transform === 'none' ? '' : style.transform;
 
 			return {
-				duration: 300,
+				duration: 500,
 				easing: quintOut,
 				css: (t) => `
 					transform: ${transform} scale(${t});
@@ -29,7 +29,7 @@
 </script>
 
 <div class="mt-12 py-4 px-3 flex justify-between items-center">
-	<div>모임 목록</div>
+	<div>모임 리스트</div>
 	<div class="flex text-xs">
 		<div class="mx-2">
 			<label class="block mb-2 font-medium text-gray-900 dark:text-white"
@@ -51,10 +51,10 @@
     {#each data.parties.data.filter((party)=>{
 			return (party.sido == selectedSido || selectedSido == "-1")
 	}) as party, index (party.id)}
-	<a href={`/search/${party.id}`}
+	<a href={`/party/${party.id}`}
 	in:receive={{ key: party.id }}
 	out:send={{ key: party.id }}
-	animate:flip={{duration:200}}>
+	animate:flip={{duration:250}}>
 		<Party si_code={data.siCode} party={party}/>
 	</a>
 		

@@ -66,7 +66,6 @@
 			} else {
 				alert("error");
 			}
-			console.log("🚀 ~ file: +page.svelte:72 ~ .then ~ json:", json)
 		})
 	}
 </script>

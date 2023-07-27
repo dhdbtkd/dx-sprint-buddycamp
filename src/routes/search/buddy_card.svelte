@@ -12,6 +12,12 @@
             badge_class : "rounded-full text-xs bg-yellow-700 text-white text-center py-0.5 mt-3 px-3"
         }
     }
+    const abbreviateText = (str, maxLength)=>{
+        if (str.length <= maxLength) {
+            return str;
+        }
+        return str.slice(0, maxLength) + '...';
+    }
 </script>
 <div class="flex mx-4 shadow rounded-lg my-3 p-3 buddy_card" si_code = {buddy.bcode.substr(0,2)} work_year={buddy.work_year} position={buddy.position}>
     
@@ -46,7 +52,7 @@
             {buddy.work_year}년
         </div>
         <div class="text-xs">
-            {buddy.introduce}
+            {abbreviateText(buddy.introduce,45)}
         </div>
     </div>
     

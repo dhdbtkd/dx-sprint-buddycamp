@@ -18,7 +18,7 @@
 			const transform = style.transform === 'none' ? '' : style.transform;
 
 			return {
-				duration: 300,
+				duration: 500,
 				easing: quintOut,
 				css: (t) => `
 					transform: ${transform} scale(${t});
@@ -90,7 +90,7 @@
 	<a href={`/search/${buddy.id}`}
 	in:receive={{ key: buddy.id }}
 	out:send={{ key: buddy.id }}
-	animate:flip={{duration:200}}>
+	animate:flip={{duration:300}}>
 		<Buddy buddy={buddy}/>
 	</a>
 		
