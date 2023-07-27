@@ -77,7 +77,7 @@
 			</div>
 			<dotlottie-player autoplay loop mode="normal" src="/main_page1.lottie" class="w-full px-12" />
 			<div class="text-center">
-				<a class={btnClass} href="/signup">모임 구경하기</a>
+				<a class={btnClass} href="/party">모임 구경하기</a>
 			</div>
 		</div>
 		<div class="swiper-slide flex flex-col items-center justify-center my-8 h-full px-2">
