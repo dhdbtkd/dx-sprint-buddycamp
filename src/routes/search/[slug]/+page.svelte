@@ -5,6 +5,7 @@
 	export let data;
 	const buddy = buddies_value.buddies.data.find((buddy) => buddy.id == data.params.slug);
     let comment;
+    let submitBtnDisabled = false;
     const commentDate = (timeStamp)=>{
 		const date = new Date(timeStamp);
 		return timeAgo(date);
@@ -26,6 +27,7 @@
 		}
 	}
     const submitComment = ()=>{
+        submitBtnDisabled = true;
 		const formData = {
 			id : buddy.id,
 			comment : comment,
@@ -47,6 +49,7 @@
 			if(json.result){
 				invalidateAll();
 				comment = '';
+                submitBtnDisabled = false;
 			}
 			console.log("🚀 ~ file: +page.svelte:72 ~ .then ~ json:", json)
 		})
@@ -140,10 +143,12 @@
 						</div>
 						
 						<button
+                            disabled={submitBtnDisabled}
 							type="submit"
-							class="inline-flex items-center py-2 px-4 text-xs font-medium text-center text-white bg-sky-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-sky-900 hover:bg-sky-800"
-						>
-							작성
+							class="disabled:bg-gray-300 inline-flex items-center py-2 px-4 text-xs font-medium text-center text-white bg-sky-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-sky-900 hover:bg-sky-800"
+                        
+                            >
+							{submitBtnDisabled?"처리중":"작성"}
 						</button>
 						
 					</div>
