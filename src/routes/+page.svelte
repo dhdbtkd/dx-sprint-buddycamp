@@ -37,6 +37,12 @@
 		console.log("🚀 ~ file: +page.svelte:37 ~ onMount ~ device:", device)
     })
 	let datas = {
+		alert : [
+			"소중한 시간내서 방문해주셔서 감사합니다",
+			"현재 데스크톱에서 접속하신 것으로 확인됩니다",
+			"모바일 환경에서만 UI가 올바르게 보이도록 개발됐습니다",
+			"계속 이용 가능하지만 UI가 옳지 않으므로 양해부탁드립니다"
+		],
 		page3 : ["주변에서 같이 창업 프로젝트를 할 팀원을 구하고 싶은 기획자 및 개발자",
 		"IT 현업자를 목표로 하는 예비 개발자",
 		"사이드 프로젝트로 역량을 쌓고 싶은 IT 종사자",
@@ -47,11 +53,18 @@
 	
 </script>
 {#if device != "Mobile"}
-<div class="absolute z-30 h-full w-full bg-black text-white">
-	소중한 시간내서 방문해주셔서 감사합니다
-	현재 데스크톱에서 접속하신 것으로 확인됩니다
-	시간 관계상 모바일 환경에서만 UI가 올바르게 보이도록 개발됐습니다
-	계속 이용 가능하지만 UI가 불편할 것 입니다
+<div class="flex flex-col justify-center items-center absolute z-30 h-full w-full bg-[#000000dd] text-white text-lg">
+	<div class="text-4xl my-10 font-bold">
+		BUDDYCAMP
+	</div>
+	{#each datas.alert as alert, index(index)}
+		<p class="my-3">
+			{alert}
+		</p>
+	{/each}
+	<div on:click={()=>{device = "Mobile"}} class="bg-orange-400 px-32 py-2 mt-20 rounded text-2xl font-bold hover:cursor-pointer animate-bounce hover:bg-orange-500 hover:scale-125 duration-300">
+		Continue
+	</div>
 </div>
 {/if}
 <div class="swiper mt-12 mb-20">
