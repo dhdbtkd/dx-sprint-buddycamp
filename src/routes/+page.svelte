@@ -9,7 +9,11 @@
 	import { onMount } from 'svelte';
 	let btnClass = 'rounded-full text-white bg-blue-500 px-8 text-center py-1 my-12 shadow-sm';
     let lottieContainer = [];
-
+	let device;
+	const detectDevice=()=>{
+		const userAgent = navigator.userAgent;
+		return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent) ? 'Mobile' : 'Desktop';
+	}
     onMount(()=>{
         lottie.loadAnimation({
             container : lottieContainer[0],
@@ -29,6 +33,8 @@
 			parallax: true,
 			speed: 600,
 		});
+		device = detectDevice();
+		console.log("🚀 ~ file: +page.svelte:37 ~ onMount ~ device:", device)
     })
 	let datas = {
 		page3 : ["주변에서 같이 창업 프로젝트를 할 팀원을 구하고 싶은 기획자 및 개발자",
@@ -40,7 +46,14 @@
 	}
 	
 </script>
-
+{#if device != "Mobile"}
+<div class="absolute z-30 h-full w-full bg-black text-white">
+	소중한 시간내서 방문해주셔서 감사합니다
+	현재 데스크톱에서 접속하신 것으로 확인됩니다
+	시간 관계상 모바일 환경에서만 UI가 올바르게 보이도록 개발됐습니다
+	계속 이용 가능하지만 UI가 불편할 것 입니다
+</div>
+{/if}
 <div class="swiper mt-12 mb-20">
 	<div class="swiper-wrapper">
 		<div class="swiper-slide flex flex-col items-center justify-center h-full px-2">
