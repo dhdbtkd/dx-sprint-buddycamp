@@ -18,7 +18,6 @@
             
         })
         .then((json)=>{
-            console.log("🚀 ~ file: map_buddy_modal.svelte:22 ~ .then ~ json:", json)
             return json;
             
         })
@@ -32,7 +31,6 @@
         .then((json)=>{
             return json;
         })
-        console.log("🚀 ~ file: map_buddy_modal.svelte:26 ~ onMount ~ nickName:", nickName)
         comments = await fetch(`${PUBLIC_BACK_URL}/sprint/comment?category=buddy&parent_id=${buddy.id}`)
         .then((response)=>{
             return response.json()
@@ -90,7 +88,6 @@
 				comment = '';
                 submitBtnDisabled = false;
 			}
-			console.log("🚀 ~ file: +page.svelte:72 ~ .then ~ json:", json)
 		})
     }
 </script>
