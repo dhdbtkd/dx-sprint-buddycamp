@@ -1,12 +1,16 @@
 <script>
     import { Cartesian3, Cartesian2, HorizontalOrigin, LabelStyle, HeightReference, Color, NearFarScalar, VerticalOrigin, createOsmBuildingsAsync, Ion, Math as CesiumMath, Terrain, Viewer, ArcGisMapServerImageryProvider, ImageryLayer, ArcGisBaseMapType, DistanceDisplayCondition, MapboxImageryProvider, WebMapTileServiceImageryProvider,UrlTemplateImageryProvider,ScreenSpaceEventHandler,Cartographic, Math,ScreenSpaceEventType, defined, defaultValue, Entity } from 'cesium';
     import "cesium/Build/Cesium/Widgets/widgets.css";
-	import { onMount } from 'svelte';
+	import { afterUpdate, onMount } from 'svelte';
     import { buddies_value } from '$lib/store';
+    console.log("🚀 ~ file: +page.svelte:6 ~ buddies_value:", buddies_value)
     import BuddyModal from './map_buddy_modal.svelte'
 	import Modal from '../../modal.svelte';
+
     let modalShow = false;
     let clickedBuddy;
+    let viewer;
+    let avatartPath;
     const addEntity = (viewer, buddy)=>{
         let avatar_path;
         let file_name = buddy.avatar_path.split("/")[buddy.avatar_path.split("/").length-1]
@@ -17,52 +21,52 @@
         } else {
             avatar_path = `/avatar/3/${file_name}`;
         }
-        const entity = viewer.entities.add({
-            id: buddy.id,
-            day: 1,
-            position: new Cartesian3.fromDegrees(Number(buddy.coord_x), Number(buddy.coord_y), 30),
-            billboard: {
-                image: avatar_path,
-                show: true,
-                pixelOffset: new Cartesian2(0, 0),
-                eyeOffset: new Cartesian3(0.0, 0.0, 5),
-                horizontalOrigin: HorizontalOrigin.CENTER,
-                verticalOrigin: VerticalOrigin.CENTER,
-                scale: 0.13,
-                alignedAxis: Cartesian3.ZERO,
-                scaleByDistance: new NearFarScalar(1.5e3, 1, 4.5e4, 0.2),
-                disableDepthTestDistance : 10000000,
-                heightReference : HeightReference.RELATIVE_TO_GROUND
-            },
-            zIndex: 1,
-            label: {
-                text: buddy.name,
-                pixelOffset: new Cartesian2(0.0, -80),
-                font: "24px KBO-Dia-Gothic-bold",
-                fillColor: Color.fromCssColorString("#000000"),
-                outlineColor: Color.fromCssColorString("#ffffff"),
-                outlineWidth: 2.5,
-                style: LabelStyle.FILL_AND_OUTLINE,
-                pixelOffsetScaleByDistance: new NearFarScalar(
-                    1.5e3,
-                    1.0,
-                    4.5e4,
-                    0.2
-                ),
-                scaleByDistance: new NearFarScalar(
-                    5.5e3,
-                    0.8,
-                    4.5e4,
-                    0.5
-                ),
-                disableDepthTestDistance : 10000000,
-                distanceDisplayCondition  : new DistanceDisplayCondition(
-                    0.0,
-                    3.0e4
-                ),
-            },
-            zIndex: 2
-        });
+        if(avatar_path){
+            const entity = viewer.entities.add({
+                id: buddy.id,
+                position: new Cartesian3.fromDegrees(Number(buddy.coord_x), Number(buddy.coord_y), 30),
+                billboard: {
+                    image: avatar_path,
+                    show: true,
+                    pixelOffset: new Cartesian2(0, 0),
+                    eyeOffset: new Cartesian3(0.0, 0.0, 5),
+                    horizontalOrigin: HorizontalOrigin.CENTER,
+                    verticalOrigin: VerticalOrigin.CENTER,
+                    scale: 0.45,
+                    alignedAxis: Cartesian3.ZERO,
+                    scaleByDistance: new NearFarScalar(1.5e3, 1, 4.5e4, 0.2),
+                    disableDepthTestDistance : 0,
+                    heightReference : HeightReference.RELATIVE_TO_GROUND
+                },
+                label: {
+                    text: buddy.name,
+                    pixelOffset: new Cartesian2(0.0, -80),
+                    font: "24px KBO-Dia-Gothic-bold",
+                    fillColor: Color.fromCssColorString("#000000"),
+                    outlineColor: Color.fromCssColorString("#ffffff"),
+                    outlineWidth: 2.5,
+                    style: LabelStyle.FILL_AND_OUTLINE,
+                    pixelOffsetScaleByDistance: new NearFarScalar(
+                        1.5e3,
+                        1.0,
+                        4.5e4,
+                        0.2
+                    ),
+                    scaleByDistance: new NearFarScalar(
+                        5.5e3,
+                        0.8,
+                        4.5e4,
+                        0.5
+                    ),
+                    disableDepthTestDistance : 0,
+                    distanceDisplayCondition  : new DistanceDisplayCondition(
+                        0.0,
+                        3.0e4
+                    ),
+                },
+            });
+        }
+        
     }
     onMount(async ()=>{
         window.CESIUM_BASE_URL = '/Cesium/';
@@ -76,7 +80,7 @@
         Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJiYmM2NTg4Ny1iZDY5LTRlOTEtYjk0ZS1lMDY1NWY4N2VhOTgiLCJpZCI6MjIwNSwiaWF0IjoxNTMxOTg5Nzk0fQ.sPBKjs9mbYue8zBaLpMSUj8hzoF1wsgZcht1iUU2UGk';
 
         // Initialize the Cesium Viewer in the HTML element with the `cesiumContainer` ID.
-        const viewer = new Viewer('viewer', {
+        viewer = new Viewer('viewer', {
             terrain: Terrain.fromWorldTerrain(),
             baseLayerPicker : false,
             fullscreenButton : false,
@@ -100,13 +104,12 @@
             // ),
 
         });
-        console.log("🚀 ~ file: +page.svelte:103 ~ onMount ~ viewer:", viewer)
         const blackMarble = ImageryLayer.fromProviderAsync(
             new UrlTemplateImageryProvider({
                 url: defaultMap
             })
         );
-        viewer.scene.imageryLayers.add(blackMarble);
+        // viewer.scene.imageryLayers.add(blackMarble);
         
 
         viewer.resolutionScale = 1.5;
@@ -117,13 +120,14 @@
                 heading: CesiumMath.toRadians(0.0),
                 pitch: CesiumMath.toRadians(-72),
             },
-            duration : 1
+            duration : 1,
         });
         if(buddies_value){
-            buddies_value.buddies.data.map((buddy)=>{
-                addEntity(viewer, buddy);
-            })
-        }
+                    buddies_value.buddies.data.forEach(element => {
+                        addEntity(viewer, element);
+                    });
+                }
+        
         addClickEventMap(viewer);
     })
     const pickEntity = (viewer, windowPosition)=>{
