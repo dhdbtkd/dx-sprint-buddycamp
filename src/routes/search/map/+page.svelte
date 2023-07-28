@@ -1,5 +1,5 @@
 <script>
-    import { Cartesian3, Cartesian2, HorizontalOrigin, LabelStyle, HeightReference, Color, NearFarScalar, VerticalOrigin, createOsmBuildingsAsync, Ion, Math as CesiumMath, Terrain, Viewer, ArcGisMapServerImageryProvider, ImageryLayer, ArcGisBaseMapType, DistanceDisplayCondition, MapboxImageryProvider, WebMapTileServiceImageryProvider,UrlTemplateImageryProvider,ScreenSpaceEventHandler,Cartographic, Math,ScreenSpaceEventType, defined, defaultValue, Entity } from 'cesium';
+    import { Cartesian3, Cartesian2, HorizontalOrigin, LabelStyle, HeightReference, Color, NearFarScalar, VerticalOrigin, createOsmBuildingsAsync, Ion, Math as CesiumMath, Terrain, Viewer, ArcGisMapServerImageryProvider, ImageryLayer, ArcGisBaseMapType, DistanceDisplayCondition, MapboxImageryProvider, WebMapTileServiceImageryProvider,UrlTemplateImageryProvider,ScreenSpaceEventHandler,Cartographic, Math,ScreenSpaceEventType, defined, defaultValue, Entity,HeadingPitchRange } from 'cesium';
     import "cesium/Build/Cesium/Widgets/widgets.css";
 	import { afterUpdate, onMount } from 'svelte';
     import { buddies_value } from '$lib/store';
@@ -11,6 +11,35 @@
     let clickedBuddy;
     let viewer;
     let avatartPath;
+    let lastPosition;
+    let positions = [{
+        position : "개발자",
+        position_id : 1,
+        colorCode : "#016aa2"
+    },{
+        position : "디자이너",
+        position_id : 2,
+        colorCode : "#ba133c"
+    },{
+        position : "기획자",
+        position_id : 3,
+        colorCode : "#a16106"
+    }];
+    $: cameraReturn(modalShow)
+    const cameraReturn = (modalShow)=>{
+        if(modalShow) return
+        if(viewer){
+            viewer.camera.flyTo({
+                destination: lastPosition.coord,
+                orientation: {
+                    heading: lastPosition.heading,
+                    pitch: lastPosition.pitch,
+                },
+                duration : 1,
+            });
+        }
+        
+    }
     const addEntity = (viewer, buddy)=>{
         let avatar_path;
         let file_name = buddy.avatar_path.split("/")[buddy.avatar_path.split("/").length-1]
@@ -111,7 +140,9 @@
         );
         viewer.scene.imageryLayers.add(blackMarble);
         
-
+        viewer.scene.screenSpaceCameraController.minimumZoomDistance = 1000
+        viewer.scene.screenSpaceCameraController.maximumZoomDistance = 900000;
+        viewer.scene.postProcessStages.fxaa.enabled=true
         viewer.resolutionScale = 1.5;
         // Fly the camera to San Francisco at the given longitude, latitude, and height.
         viewer.camera.flyTo({
@@ -140,15 +171,27 @@
         }
         return undefined;
     }
-    const addClickEventMap = (viewer)=>{
+    const addClickEventMap =  (viewer)=>{
         const handler = new ScreenSpaceEventHandler(viewer.scene.canvas);
-        handler.setInputAction(function (movement) {
-            const id = pickEntity(viewer, movement.position);
-            if(id){
-                clickedBuddy = buddies_value.buddies.data.find((buddy)=>{
-                    return buddy.id == id.id
-                });
-                modalShow = true;
+        handler.setInputAction(async function (movement) {
+            const entity = pickEntity(viewer, movement.position);
+            if(entity){
+                lastPosition = {
+                    coord : new Cartesian3(viewer.scene.camera.position.x, viewer.scene.camera.position.y,viewer.scene.camera.position.z),
+                    heading : viewer.scene.camera.heading,
+                    pitch : viewer.scene.camera.pitch
+                };
+                const flyFinish = await viewer.flyTo(entity,{
+                    duration :0.5,
+                    offset : new HeadingPitchRange(0, -60*3.14/180, 3000)
+                })
+                if(flyFinish){
+                    clickedBuddy = buddies_value.buddies.data.find((buddy)=>{
+                        return buddy.id == entity.id
+                    });
+                    modalShow = true;
+                }
+                
             }
             
         }, ScreenSpaceEventType.LEFT_CLICK);
@@ -162,6 +205,19 @@
 <a href="/search" class="absolute bottom-3 right-5 bg-blue-800 rounded-full w-14 h-14 mb-20 text-white flex justify-center items-center shadow-lg">
 	<svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" height="1.5em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M40 48C26.7 48 16 58.7 16 72v48c0 13.3 10.7 24 24 24H88c13.3 0 24-10.7 24-24V72c0-13.3-10.7-24-24-24H40zM192 64c-17.7 0-32 14.3-32 32s14.3 32 32 32H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H192zm0 160c-17.7 0-32 14.3-32 32s14.3 32 32 32H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H192zm0 160c-17.7 0-32 14.3-32 32s14.3 32 32 32H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H192zM16 232v48c0 13.3 10.7 24 24 24H88c13.3 0 24-10.7 24-24V232c0-13.3-10.7-24-24-24H40c-13.3 0-24 10.7-24 24zM40 368c-13.3 0-24 10.7-24 24v48c0 13.3 10.7 24 24 24H88c13.3 0 24-10.7 24-24V392c0-13.3-10.7-24-24-24H40z"/></svg>
 </a>
+<div class="absolute mb-20 left-3 bottom-1 text-[0.5rem] rounded bg-[#ffffffbb] p-1 text-gray-700">
+    {#each positions as position, index(index)}
+        <div class="flex items-center justify-between mb-1">
+            <div class={`rounded-full w-4 h-4 bg-transparent border-2 border-[${position.colorCode}] mr-2`} style:border-color={position.colorCode}>
+
+            </div>
+            <div>
+                {position.position}
+            </div>
+        </div>
+    {/each}
+    
+</div>
 {#if modalShow}
     <BuddyModal buddy={clickedBuddy} bind:modalShow={modalShow}></BuddyModal>
 {/if}
