@@ -8,16 +8,17 @@
 		<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 		<!-- Google tag (gtag.js) -->
 		<script async src="https://www.googletagmanager.com/gtag/js?id=G-C5LZY8B7QE"></script>
-		<script>
-			window.dataLayer = window.dataLayer || [];
-			function gtag(){dataLayer.push(arguments);}
-			gtag('js', new Date());
-
-			gtag('config', 'G-C5LZY8B7QE');
-		</script>
+		
 		<!-- <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=54e00f28cae8fd119e0ebaa9305a821e&libraries=services"></script> -->
 		%sveltekit.head%
 	</head>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'G-C5LZY8B7QE');
+	</script>
 	<body data-sveltekit-preload-data="hover" style="height:100%;overflow:hidden">
 		<div style="display: flex;flex-direction:column;height:100%;overflow:scroll;">%sveltekit.body%</div>
 	</body>
