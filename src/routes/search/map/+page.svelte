@@ -109,7 +109,7 @@
                 url: defaultMap
             })
         );
-        // viewer.scene.imageryLayers.add(blackMarble);
+        viewer.scene.imageryLayers.add(blackMarble);
         
 
         viewer.resolutionScale = 1.5;
