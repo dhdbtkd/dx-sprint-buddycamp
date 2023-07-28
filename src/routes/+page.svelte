@@ -7,7 +7,7 @@
 	import 'swiper/css/navigation';
 	import 'swiper/css/pagination';
 	import { onMount } from 'svelte';
-	let btnClass = 'rounded-full text-white bg-blue-500 px-8 text-center py-1 my-12 shadow-sm';
+	let btnClass = 'flex items-center justify-center rounded text-white bg-blue-500 px-6 text-center py-3 my-12 shadow-sm text-lg font-bold';
     let lottieContainer = [];
 	let device;
 	const detectDevice=()=>{
@@ -71,27 +71,36 @@
 	<div class="swiper-wrapper">
 		<div class="swiper-slide flex flex-col items-center justify-center h-full px-2">
 			<div class="text-center py-8">
-				<p class="text-xl font-bold">지역, 소개, 포지션만 입력하면 끝!</p>
+				<p class="text-xl font-bold">지역, 소개, 포지션만 입력하면 끝🚀</p>
 				<p>만나서 관심사를 이야기하고</p>
 				<p>프로젝트를 꾸려보세요</p>
 			</div>
 			<dotlottie-player autoplay loop mode="normal" src="/main_page1.lottie" class="w-full px-12" />
 			<div class="text-center">
-				<a class={btnClass} href="/party">모임 구경하기</a>
+				<a class={btnClass} href="/party">
+					
+					모임 구경하기
+					<svg fill="currentColor" class="ml-2" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/></svg>
+				</a>
 			</div>
 		</div>
-		<div class="swiper-slide flex flex-col items-center justify-center my-8 h-full px-2">
+		<div class="swiper-slide flex flex-col items-center justify-center h-full px-2">
 			<div class="text-center py-5">
 				<p>프로필을 올리고</p>
 				<p>마음에 드는 버디들과</p>
-				<p class="text-2xl font-bold">팀을 만들어보세요!</p>
+				<p class="text-2xl font-bold">팀을 만들어보세요👋</p>
 			</div>
-			<div class="w-2/3 my-8 mx-auto" bind:this={lottieContainer[1]}/>
-			<div class="text-center"><a class={btnClass} href="/search">버디 구경하기</a></div>
+			<div class="w-1/2 my-8 mx-auto" bind:this={lottieContainer[1]}/>
+			<div class="text-center">
+				<a class={btnClass} href="/search">
+					버디 구경하기
+					<svg fill="currentColor" class="ml-2" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/></svg>
+				</a>
 		</div>
-		<div class="swiper-slide flex flex-col items-center justify-center my-8 h-full px-2">
+		</div>
+		<div class="swiper-slide flex flex-col items-center justify-center h-full px-2">
 			<dotlottie-player autoplay loop mode="normal" src="/main_page3.lottie" class="w-full px-12" />
-			<div class="py-10">
+			<div class="py-10 px-6">
 				<p class="font-bold">이런 분이라면 버디캠프를 잘찾아오셨어요</p>
 				<div class="text-sm">
 					{#each datas.page3 as text, index}
@@ -108,3 +117,8 @@
 		</div>
 	</div>
 </div>
+<style>
+	.swiper-slide {
+		display: flex !important;
+	}
+</style>
