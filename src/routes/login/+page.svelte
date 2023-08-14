@@ -1,5 +1,7 @@
 <script>
     import { PUBLIC_BACK_URL } from '$env/static/public';
+    import {goto} from '$app/navigation';
+    import Util from '$lib/util';
 
     let id, pw='';
     const fetchLogin = ()=>{
@@ -18,18 +20,37 @@
             headers:{          
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
-            }
+            },
+            credentials: 'include'
         })
         .then((result)=>{
             return result.json()
         })
         .then((json)=>{
-            console.log("🚀 ~ file: +page.svelte:9 ~ .then ~ json:", json)
+            if(json.result){
+                // alert("로그인 성공");
+                goto('/party')
+            } else {
+                alert(`로그인 실패 - ${json.msg}`)
+            }
         })
     }
     const validateEmail = () => {
         if(id.includes("@")) return true;
         return false;
+    }
+    const loginValid = ()=>{
+        fetch(`${PUBLIC_BACK_URL}/sprint/user/login`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: 'include'
+        })
+        .then(res => res.json())
+        .then(json => {
+            console.log("🚀 ~ file: +page.svelte:44 ~ loginValid ~ json:", json)
+        });
     }
 </script>
 <div class="flex h-full">
@@ -57,10 +78,6 @@
                     </a>
                 </div>
             </div>
-        </div>
-        
-        <div>
-
         </div>
     </div>
     <div class="md:block hidden w-1/2 bg-cover" style="background-image:url('1.jpg')">

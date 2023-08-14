@@ -24,7 +24,6 @@ const db = {
     getComments : async (parent_id, category)=>{
         const result = await fetch(`${PUBLIC_BACK_URL}/sprint/comment?category=${category}&parent_id=${parent_id}`)
         .then((response)=>{
-            console.log("🚀 ~ file: database.js:28 ~ .then ~ response:", response)
             return response.json()
             
         })

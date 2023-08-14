@@ -3,16 +3,36 @@
 	import { PUBLIC_BACK_URL } from '$env/static/public';
 	import { onMount } from 'svelte';
 	import { invalidateAll } from '$app/navigation';
+	import Util from '$lib/util';
 	export let data;
-	const party = parties_value.parties.data.find((party) => party.id == data.params.slug);
-    const sidoName = parties_value.siCode.find((sido)=>sido.code == party.sido).name;
+	console.log("🚀 ~ file: +page.svelte:7 ~ data:", data)
+	let party, sidoName;
+	let isLogin;
 	let comment;
 	let likeBtn = false;
-	let likeNum = party.like;
-	onMount(()=>{
+	let likeNum;
+
+
+	onMount(async ()=>{
+		// isLogin = await Util.loginValid();
+		// if(isLogin){
+		// 	alert("로그인함");
+		// 	if(data.liked){
+		// 		likeBtn = true;
+		// 	}
+		// 	party = parties_value.parties.data.find((party) => party.id == data.params.slug);
+		// 	sidoName = parties_value.siCode.find((sido)=>sido.code == party.sido).name;
+		// 	likeNum = party.like;
+		// } else {
+		// 	alert("로그인 안함");
+		// }
 		if(data.liked){
 			likeBtn = true;
 		}
+		party = parties_value.parties.data.find((party) => party.id == data.params.slug);
+		sidoName = parties_value.siCode.find((sido)=>sido.code == party.sido).name;
+		likeNum = party.like;
+	
 	})
 	const commentDate = (timeStamp)=>{
 		const date = new Date(timeStamp);
@@ -93,7 +113,7 @@
 		})
 	}
 </script>
-
+{#if party}
 <div class="mt-14 mb-20">
 	<div class="mx-3 my-6 rounded-lg flex flex-col items-center border-b">
 
@@ -214,3 +234,4 @@
 		</div>
 	</div>
 </div>
+{/if}
