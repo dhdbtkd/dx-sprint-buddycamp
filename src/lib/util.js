@@ -6,12 +6,7 @@ const Util = {
             jwtToken : token
         }
         const result = await fetch(`${PUBLIC_BACK_URL}/sprint/user/payload`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body : JSON.stringify(body_data),
-            credentials: 'include'
+            credentials : 'include'
         })
         .then(res => res.json())
         .then(json => {
