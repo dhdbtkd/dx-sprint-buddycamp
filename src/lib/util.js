@@ -11,6 +11,7 @@ const Util = {
                 'Content-Type': 'application/json'
             },
             body : JSON.stringify(body_data),
+            credentials: 'include'
         })
         .then(res => res.json())
         .then(json => {
