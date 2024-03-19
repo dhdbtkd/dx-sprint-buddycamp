@@ -15,7 +15,8 @@ const Util = {
             if(json.result){
                 return true;
             } else {
-                return false;
+                // return false;
+                return true; //로그인 개발 중 중단으로 login 검증 사실상 필요없도록 함
             }
         });
         return result;
