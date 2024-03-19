@@ -1,38 +1,25 @@
-# create-svelte
+![header](https://capsule-render.vercel.app/api?type=waving&height=300&color=gradient&text=Buddycamp)
+# 함께 성장할 버디를 만나는 곳, 버디캠프
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+공모전, 지원사업 같이 할 동료 만나기 어렵죠?
 
-## Creating a project
+버디캠프에서 가까운 지역의 동료를 만나보세요
 
-If you're seeing this, you've probably already done this step. Congrats!
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+<p>
+  <img src='https://github.com/dhdbtkd/ggoman_front/assets/37060597/571da32e-98e7-406b-8695-48dc652ac791' width="33%"></img>
+  <img src='https://github.com/dhdbtkd/ggoman_front/assets/37060597/937beed6-88bc-4aed-8466-4e5d6b88acd7' width="33%"></img>
+</p>
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
 
-## Developing
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+### What i used
+Map - [CesiumJS](https://cesium.com/platform/cesiumjs/)
 
-```bash
-npm run dev
+Framework - SvelteKit
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+Style - Tailwind
 
-## Building
+Bundler - Vite
 
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+ETC - Swiper, lottie
